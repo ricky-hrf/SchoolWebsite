@@ -22,7 +22,7 @@ const LoginPage = () => {
 
   return (
     <div className="w-full h-screen bg-slate-50 grid grid-cols-12 text-red-800 font-serif">
-      <div className="col-span-7 h-full bg-[url('gambar/anjing1.jpg')] bg-cover relative">
+      <div className="col-span-7 h-full bg-[url('gambar/bg-login.jpg')] bg-cover relative">
         <div className="absolute top-0 right-0 left-2/3 bottom-0 bg-gradient-to-r from-transparent to-slate-50"></div>
       </div>
       <div className="col-span-5 h-full flex justify-center items-center shadow-xl">

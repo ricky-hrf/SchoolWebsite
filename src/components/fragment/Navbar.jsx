@@ -1,5 +1,5 @@
 import { HiSearch, HiOutlineMoon, HiOutlineSun } from "react-icons/hi";
-import { BiSolidBell, BiSolidMessageDetail, BiCaretDown } from "react-icons/bi";
+import { BiSolidBell, BiSolidMessageDetail, BiCaretDown, BiLogInCircle, BiLogOutCircle } from "react-icons/bi";
 import IconStyle from "../atoms/IconStyle";
 import { useState, useContext } from "react";
 import { ThemeContext } from "../../context/ThemeContext";
@@ -22,11 +22,11 @@ const Navbar = () => {
   }
   return (
     <nav className={`fixed top-0 left-0 right-0 z-1 h-20 ${theme === "light" ? "bg-white text-red-700" : "bg-red-900 text-white"} font-serif`}>
-      <div className="w-full grid grid-cols-12 gap-2 h-full shadow">
+      <div className="w-full flex md:grid grid-cols-12 gap-2 h-full shadow">
         <div className="col-span-3 w-full h-full flex justify-center items-center">
-          <span className="text-2xl font-bold ">Yayasan MySchool</span>
+          <span className="text-xs md:text-2xl font-bold ">Yayasan MySchool</span>
         </div>
-        <div className={`col-span-4 w-full flex justify-center items-center ${theme === "light" ? "text-red-800" : "text-white"}`}>
+        <div className={`hidden col-span-4 w-full md:flex justify-center items-center ${theme === "light" ? "text-red-800" : "text-white"}`}>
           {isAuthenticated ? (
             <div className="relative w-2/3 h-8 rounded-full flex justify-center items-center">
               <input type="text" className="ring-1 focus:outline-none rounded-full h-full w-full pl-10 flex items-center" />
@@ -48,7 +48,7 @@ const Navbar = () => {
             </div>
           )}
         </div>
-        <div className="col-span-2 flex justify-around gap-4 items-center">
+        <div className="col-span-2 hidden md:flex justify-around gap-4 items-center">
           {isAuthenticated ? (
             <div className="w-full flex justify-between">
               <IconStyle nameIcon={<BiSolidBell />} />
@@ -85,14 +85,15 @@ const Navbar = () => {
                   </div>
                   <div
                     onClick={handleLogout}
-                    className={`p-2 rounded-b-md ${theme === "light" ? "hover:bg-white hover:text-red-900" : "hover:bg-white hover:text-black"} cursor-pointer`}>
+                    className={`p-2 rounded-b-md ${theme === "light" ? "hover:bg-white hover:text-red-900" : "hover:bg-white hover:text-black"} flex items-center gap-2 cursor-pointer`}>
+                    <BiLogOutCircle />
                     <span>Logout</span>
                   </div>
                 </div>
               }
             </div>
           ) : (
-            <div className="flex justify-center items-center gap-5 h-full">
+            <div className="flex justify-center items-center gap-4 h-full">
               <div onClick={toggleTheme} className="flex justify-center w-20">
                 {theme === "light" ? (
                   <IconStyle nameIcon={<HiOutlineMoon />} />
@@ -100,12 +101,16 @@ const Navbar = () => {
                   <IconStyle nameIcon={<HiOutlineSun />} />
                 )}
               </div>
-              <div className="flex gap-2 font-bold">
+              <div className="flex justify-around font-bold w-full">
                 <Link to="/login">
                   <button
-                    className={`w-25 p-2 rounded-lg border ${theme === "light" ? "bg-red-900 text-white hover:bg-white hover:text-red-800" : "bg-white text-gray-900 hover:bg-gray-900 hover:text-white"} cursor-pointer`}>Sign In</button>
+                    className={`w-29 p-2 rounded-lg border ${theme === "light" ? "bg-red-900 text-white hover:bg-white hover:text-red-800" : "bg-white text-gray-900 hover:bg-gray-900 hover:text-white"} cursor-pointer`}>
+                    <div className="flex justify-center items-center gap-2 w-full h-full">
+                      <BiLogInCircle />Sign In
+                    </div>
+                  </button>
                 </Link>
-                <button className={`w-25 p-2 rounded-lg border ${theme === "light" ? "hover:bg-red-900 hover:text-white" : "hover:bg-white hover:text-gray-900"} cursor-pointer`}>Sign Up</button>
+                <button className={`w-29 p-2 rounded-lg border ${theme === "light" ? "hover:bg-red-900 hover:text-white" : "hover:bg-white hover:text-gray-900"} cursor-pointer`}>Sign Up</button>
               </div>
             </div>
           )}
