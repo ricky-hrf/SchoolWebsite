@@ -3,7 +3,6 @@ import Navbar from "../components/fragment/Navbar";
 import Sidebar from "../components/fragment/Sidebar";
 import { ThemeContext } from "../context/ThemeContext";
 
-
 const AdminLayout = ({ children }) => {
   const [openSidebar, setOpenSidebar] = useState(() => {
     const savedSidebar = localStorage.getItem("sidebarOpen");
@@ -21,7 +20,7 @@ const AdminLayout = ({ children }) => {
   const { theme } = useContext(ThemeContext);
 
   return (
-    <div className="w-full transition duration-300">
+    <div className="w-full">
       <Navbar />
       <main className={`w-full mt-20 flex ${theme === "light" ? "bg-white" : "bg-black"}`}>
         <aside className={`${theme === "light" ? "bg-red-900" : "bg-white"}`}>

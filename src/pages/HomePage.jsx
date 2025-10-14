@@ -1,5 +1,7 @@
 import { useContext } from "react";
-import { BiChevronLeft, BiChevronRight } from 'react-icons/bi';
+import {
+  BiChevronLeft, BiChevronRight, BiLogoLinkedin, BiLogoYoutube, BiLogoWhatsapp, BiLogoInstagram, BiLogoFacebook,
+} from 'react-icons/bi';
 import Navbar from "../components/fragment/Navbar";
 import { ThemeContext } from "../context/ThemeContext";
 import IconStyle from "../components/atoms/IconStyle";
@@ -26,10 +28,24 @@ const HomePage = () => {
             <span className="text-sm">View More</span>
           </div>
         </div>
-        <div className="w-full flex justify-between gap-4">
+        <div className="w-full flex flex-col md:flex-row justify-center gap-4">
           <div className="border h-80 w-full rounded-lg shadow-xl bg-[url('./gambar/bg-annoucment1.jpg')] bg-cover cursor-pointer"></div>
           <div className="border h-80 w-full rounded-lg shadow-xl bg-[url('./gambar/bg-annoucment2.jpg')] bg-cover cursor-pointer"></div>
           <div className="border h-80 w-full rounded-lg shadow-xl bg-[url('./gambar/bg-annoucment3.jpg')] bg-cover cursor-pointer"></div>
+        </div>
+      </div>
+      <div className={`relative h-20 ${theme === "light" ? "bg-white" : "bg-red-900"}`}>
+        <div className="absolute right-0 left-0 bottom-0 px-10 h-20 flex flex-col md:flex-row justify-between items-center">
+          <div className="flex gap-5 justify-center items-center">
+            <IconStyle nameIcon={<BiLogoLinkedin />} />
+            <IconStyle nameIcon={<BiLogoYoutube />} />
+            <IconStyle nameIcon={<BiLogoWhatsapp />} />
+            <IconStyle nameIcon={<BiLogoInstagram />} />
+            <IconStyle nameIcon={<BiLogoFacebook />} />
+          </div>
+          <div className={`font-semibold text-lg ${theme === "light" ? "text-red-900" : "text-white"}`}>
+            <span>Copyrigth &copy; 2025. All right reserved.</span>
+          </div>
         </div>
       </div>
     </div>

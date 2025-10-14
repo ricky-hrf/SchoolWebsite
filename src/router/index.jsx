@@ -5,6 +5,7 @@ import Dashboard from '../pages/Dashboard';
 import DetailUser from '../pages/DetailUser';
 import LoginPage from "../pages/LoginPage";
 import ProtectedRoute from "../components/ProtectedRoute";
+import DataMasters from "../pages/DataMasters";
 
 const router = createBrowserRouter([
   {
@@ -31,5 +32,9 @@ const router = createBrowserRouter([
     path: "/user-management/:id",
     element: (<ProtectedRoute><DetailUser /></ProtectedRoute>)
   },
+  {
+    path: "/data-master",
+    element: (<ProtectedRoute><DataMasters /></ProtectedRoute>)
+  }
 ])
 export default router;

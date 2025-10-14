@@ -1,5 +1,5 @@
 import { HiSearch, HiOutlineMoon, HiOutlineSun } from "react-icons/hi";
-import { BiSolidBell, BiSolidMessageDetail, BiCaretDown, BiLogInCircle, BiLogOutCircle } from "react-icons/bi";
+import { BiSolidBell, BiSolidMessageDetail, BiCaretDown, BiLogInCircle, BiLogOutCircle, BiSearchAlt2, BiMenu } from "react-icons/bi";
 import IconStyle from "../atoms/IconStyle";
 import { useState, useContext } from "react";
 import { ThemeContext } from "../../context/ThemeContext";
@@ -21,10 +21,10 @@ const Navbar = () => {
     navigate("/");
   }
   return (
-    <nav className={`fixed top-0 left-0 right-0 z-1 h-20 ${theme === "light" ? "bg-white text-red-700" : "bg-red-900 text-white"} font-serif`}>
+    <nav className={`fixed top-0 left-0 right-0 z-1 h-15 md:h-20 ${theme === "light" ? "bg-white text-red-700" : "bg-red-900 text-white"} font-serif`}>
       <div className="w-full flex md:grid grid-cols-12 gap-2 h-full shadow">
         <div className="col-span-3 w-full h-full flex justify-center items-center">
-          <span className="text-xs md:text-2xl font-bold ">Yayasan MySchool</span>
+          <span className="text-lg lg:text-2xl font-bold">Vichristus School</span>
         </div>
         <div className={`hidden col-span-4 w-full md:flex justify-center items-center ${theme === "light" ? "text-red-800" : "text-white"}`}>
           {isAuthenticated ? (
@@ -94,6 +94,9 @@ const Navbar = () => {
             </div>
           ) : (
             <div className="flex justify-center items-center gap-4 h-full">
+              <div className="h-full w-full flex justify-center items-center md:hidden">
+                <IconStyle nameIcon={<BiSearchAlt2 />} />
+              </div>
               <div onClick={toggleTheme} className="flex justify-center w-20">
                 {theme === "light" ? (
                   <IconStyle nameIcon={<HiOutlineMoon />} />
@@ -101,16 +104,19 @@ const Navbar = () => {
                   <IconStyle nameIcon={<HiOutlineSun />} />
                 )}
               </div>
-              <div className="flex justify-around font-bold w-full">
+              <div className="hidden md:flex justify-around font-bold w-full">
                 <Link to="/login">
                   <button
-                    className={`w-29 p-2 rounded-lg border ${theme === "light" ? "bg-red-900 text-white hover:bg-white hover:text-red-800" : "bg-white text-gray-900 hover:bg-gray-900 hover:text-white"} cursor-pointer`}>
+                    className={`w-29 p-2 rounded-lg border ${theme === "light" ? "bg-red-900 text-white hover:bg-white hover:text-red-800" : "bg-white text-red-900 hover:bg-red-900 hover:text-white"} cursor-pointer`}>
                     <div className="flex justify-center items-center gap-2 w-full h-full">
                       <BiLogInCircle />Sign In
                     </div>
                   </button>
                 </Link>
                 <button className={`w-29 p-2 rounded-lg border ${theme === "light" ? "hover:bg-red-900 hover:text-white" : "hover:bg-white hover:text-gray-900"} cursor-pointer`}>Sign Up</button>
+              </div>
+              <div className="h-full w-full flex justify-center items-center md:hidden">
+                <IconStyle nameIcon={<BiMenu />} />
               </div>
             </div>
           )}
