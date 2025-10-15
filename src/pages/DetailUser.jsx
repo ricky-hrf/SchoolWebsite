@@ -80,8 +80,8 @@ const DetailUser = () => {
             )}
           </div>
         </div>
-        <div className="mt-4 grid grid-cols-12 gap-4">
-          <div className={`col-span-4 h-80 p-2`}>
+        <div className="mt-4 grid grid-cols-1 md:grid-cols-12 gap-4">
+          <div className={`col-span-4 h-40 md:h-80 p-2`}>
             <div className={`h-full w-full shadow-lg`}>
               <img src={user.avatar} alt={user.avatar} className="h-full w-full object-cover rounded-lg" />
             </div>

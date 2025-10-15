@@ -13,7 +13,7 @@ const Sidebar = ({ handleSidebar, openSidebar }) => {
       <div className="flex justify-end text-red-50 mr-2">
         <div
           onClick={handleSidebar}
-          className={`cursor-pointer h-8 w-8 rounded-full flex justify-center items-center   ${theme === "light" ? "hover:bg-white hover:text-red-800" : "text-black hover:bg-black hover:text-white"} `}>
+          className={`cursor-pointer h-8 w-8 rounded-full hidden md:flex justify-center items-center ${theme === "light" ? "hover:bg-white hover:text-red-800" : "text-black hover:bg-black hover:text-white"} `}>
           {openSidebar === true ? (
             <BiArrowToLeft className="text-2xl" />
           ) : (
@@ -30,7 +30,7 @@ const Sidebar = ({ handleSidebar, openSidebar }) => {
             <span className="mr-2 text-xl">
               {menu.icon}
             </span>
-            <span className={`${openSidebar === true ? "block" : "hidden"} font-semibold text-sm`}>{menu.menu}</span>
+            <span className={`${openSidebar === true ? "hidden md:block" : "hidden"} font-semibold text-sm`}>{menu.menu}</span>
           </div>
         </Link>
       ))}

@@ -22,7 +22,7 @@ const AdminLayout = ({ children }) => {
   return (
     <div className="w-full">
       <Navbar />
-      <main className={`w-full mt-20 flex ${theme === "light" ? "bg-white" : "bg-black"}`}>
+      <main className={`w-full mt-15 md:mt-20 flex ${theme === "light" ? "bg-white" : "bg-black"}`}>
         <aside className={`${theme === "light" ? "bg-red-900" : "bg-white"}`}>
           <Sidebar handleSidebar={sidebarTogle} openSidebar={openSidebar} />
         </aside>

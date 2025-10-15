@@ -9,7 +9,7 @@ const CardUser = ({ data, handleDelete }) => {
   const [selectedUser, setSelectedUser] = useState(null);
 
   return (
-    <div className="w-full grid grid-cols-4 gap-2">
+    <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2">
       {data.map((lists) => (
         <div
           key={lists.id}
@@ -72,8 +72,8 @@ const CardUser = ({ data, handleDelete }) => {
                   to={`/user-management/${selectedUser.id}`}
                   className="text-xl font-bold text-red-100 hover:text-white hover:underline cursor-pointer">{selectedUser.name}</Link>
               </div>
-              <div className="h-80 w-full flex justify-center">
-                <div className="w-80 h-full">
+              <div className="h-40 md:h-80 w-full flex justify-center">
+                <div className="w-40 md:w-80 h-full">
                   <img
                     src={selectedUser.avatar}
                     alt={selectedUser.name}

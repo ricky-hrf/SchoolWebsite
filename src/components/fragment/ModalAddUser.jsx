@@ -29,9 +29,9 @@ const Modal = ({ action, data, setData }) => {
   }
 
   return (
-    <div className="absolute inset-0 bg-black/50 text-red-800 rounded-lg z-1">
+    <div className="absolute inset-0 bg-black/50 text-red-800 z-1">
       <div className="relative flex justify-center items-center p-4 h-full">
-        <div className="relative flex flex-col justify-center bg-white shadow-lg rounded-md w-1/2 p-5">
+        <div className="relative flex flex-col justify-center bg-white shadow-lg rounded-md w-full md:w-1/2 p-5">
           <div className="text-xl font-bold">
             <span>Add User</span>
           </div>
