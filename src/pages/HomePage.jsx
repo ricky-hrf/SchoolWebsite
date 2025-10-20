@@ -1,13 +1,28 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import {
   BiChevronLeft, BiChevronRight, BiLogoLinkedin, BiLogoYoutube, BiLogoWhatsapp, BiLogoInstagram, BiLogoFacebook,
 } from 'react-icons/bi';
 import Navbar from "../components/fragment/Navbar";
 import { ThemeContext } from "../context/ThemeContext";
 import IconStyle from "../components/atoms/IconStyle";
+import axios from "axios";
 
 const HomePage = () => {
   const { theme } = useContext(ThemeContext);
+  const [photos, setPhotos] = useState([]);
+
+  useEffect(() => {
+    const getPhotos = async () => {
+      try {
+        const response = await axios.get("https://jsonplaceholder.typicode.com/photos");
+        setPhotos(response.data);
+      } catch (error) {
+        console.error("Gagal memuat data:", error);
+      }
+    };
+    getPhotos();
+  }, []);
+
   return (
     <div className={`w-full ${theme === "light" ? "bg-white" : "bg-black"}`}>
       <Navbar />
@@ -28,10 +43,17 @@ const HomePage = () => {
             <span className="text-sm">View More</span>
           </div>
         </div>
-        <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 justify-center gap-4">
-          <div className="border h-80 w-full rounded-lg shadow-xl bg-[url('gambar/bg-annoucment1.jpg')] bg-cover cursor-pointer"></div>
-          <div className="border h-80 w-full rounded-lg shadow-xl bg-[url('gambar/bg-annoucment2.jpg')] bg-cover cursor-pointer"></div>
-          <div className="border h-80 w-full rounded-lg shadow-xl bg-[url('gambar/bg-annoucment3.jpg')] bg-cover cursor-pointer"></div>
+        <div className="w-full grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 gap-4">
+          {photos.slice(0, 10).map((photo) => (
+            <div key={photo.id} className="border border-red-900 text-red-900 rounded-md p-2 shadow-sm">
+              <img
+                src={photo.url}
+                alt={photo.title}
+                className="w-full h-32 object-cover rounded-md"
+              />
+              <p className="text-xs mt-2 line-clamp-2">{photo.title}</p>
+            </div>
+          ))}
         </div>
       </div>
       <div className={`relative h-20 ${theme === "light" ? "bg-white text-red-900" : "bg-red-900 text-white"}`}>

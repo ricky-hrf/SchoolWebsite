@@ -6,6 +6,7 @@ import DetailUser from '../pages/DetailUser';
 import LoginPage from "../pages/LoginPage";
 import ProtectedRoute from "../components/ProtectedRoute";
 import DataMasters from "../pages/DataMasters";
+import Event from "../pages/Events";
 
 const router = createBrowserRouter([
   {
@@ -35,6 +36,10 @@ const router = createBrowserRouter([
   {
     path: "/data-master",
     element: (<ProtectedRoute><DataMasters /></ProtectedRoute>)
+  },
+  {
+    path: "/kegiatan-sekolah",
+    element: (<ProtectedRoute><Event /></ProtectedRoute>)
   }
 ])
 export default router;

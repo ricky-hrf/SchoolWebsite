@@ -23,7 +23,7 @@ export const DataSidebar = [
   {
     key: "kurikulum",
     menu: "Kurikulum & Akademik",
-    icon: <BiSolidBlanket />
+    icon: <BiSolidBlanket />,
   },
   {
     key: "absensi",
@@ -38,7 +38,8 @@ export const DataSidebar = [
   {
     key: "kegiatan",
     menu: "Kegiatan Sekolah",
-    icon: <BiSolidParty />
+    icon: <BiSolidParty />,
+    link: "/kegiatan-sekolah"
   },
   {
     key: "laporan",
