@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import Navbar from "../components/fragment/Navbar";
 import Sidebar from "../components/fragment/Sidebar";
 import { ThemeContext } from "../context/ThemeContext";
+import Footer from "../components/fragment/Footer";
 
 const AdminLayout = ({ children }) => {
   const [openSidebar, setOpenSidebar] = useState(() => {
@@ -30,6 +31,7 @@ const AdminLayout = ({ children }) => {
           {children}
         </div>
       </main>
+      <Footer />
     </div>
   )
 }

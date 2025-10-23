@@ -17,23 +17,25 @@ const DataMasters = () => {
       } catch (error) {
         console.error("gagal memuat data ..", error);
       } finally {
-        setLoading(false);
+        setTimeout(() => {
+          setLoading(false);
+        }, 100)
       }
     };
     fetchUsers();
   }, [])
 
-  if (loading) {
-    return (
-      <p>Memuat data</p>
-    )
-  }
-
   return (
     <AdminLayout>
-      <div className={`w-full p-2 ${theme === "light" ? "text-red-900" : "text-white"}`}>
+      <div className={`w-full p-2 ${theme === "light" ? "text-red-900" : "text-white"} relative`}>
         <h1 className="text-2xl font-semibold mb-2 pb-2 border-b">{DataSidebar[2].menu}</h1>
         <table className="min-w-full border border-gray-300 rounded-lg overflow-hidden shadow-md">
+          {loading && (
+            <div className="absolute inset-0 flex items-center justify-center bg-white/70 backdrop-blur-sm z-50">
+              <div className="w-12 h-12 border-4 border-gray-300 border-t-blue-500 rounded-full animate-spin">
+              </div>
+            </div>
+          )}
           <thead className="bg-gray-800 text-white">
             <tr>
               <th className="px-4 py-3 text-left text-sm font-semibold">No</th>

@@ -1,27 +1,55 @@
-import { useContext, useEffect, useState } from "react";
-import {
-  BiChevronLeft, BiChevronRight, BiLogoLinkedin, BiLogoYoutube, BiLogoWhatsapp, BiLogoInstagram, BiLogoFacebook,
-} from 'react-icons/bi';
+import { useContext, useState } from "react";
+import { BiChevronLeft, BiChevronRight, BiCaretLeft, BiCaretRight } from 'react-icons/bi';
 import Navbar from "../components/fragment/Navbar";
 import { ThemeContext } from "../context/ThemeContext";
 import IconStyle from "../components/atoms/IconStyle";
+import Footer from "../components/fragment/Footer";
 import axios from "axios";
+import { useQuery } from "@tanstack/react-query";
+import Button from "../components/atoms/Button";
+import { useEffect } from "react";
 
 const HomePage = () => {
+  const [filter, setFilter] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 3;
   const { theme } = useContext(ThemeContext);
-  const [photos, setPhotos] = useState([]);
+
+  const { data, isLoading, isError } = useQuery({
+    queryKey: ["posts"],
+    queryFn: async () => {
+      const response = await axios.get("https://jsonplaceholder.typicode.com/posts");
+      return response.data;
+    },
+  });
 
   useEffect(() => {
-    const getPhotos = async () => {
-      try {
-        const response = await axios.get("https://jsonplaceholder.typicode.com/photos");
-        setPhotos(response.data);
-      } catch (error) {
-        console.error("Gagal memuat data:", error);
-      }
-    };
-    getPhotos();
-  }, []);
+    if (data && data.length > 0 && filter === null) {
+      setFilter(data[0].userId); // default: kategori pertama
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [data]);
+
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [filter]);
+
+  if (isLoading) return <p>memuat data</p>;
+
+  if (isError) return <p>terjadi kesalahan</p>
+
+  const category = [...new Set(data.map(item => item.userId))];
+
+  const barangTampil = filter ? data.filter(item => item.userId === filter) : data;
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = barangTampil.slice(indexOfFirstItem, indexOfLastItem);
+  const totalPages = Math.ceil(barangTampil.length / itemsPerPage);
+
+
+  const handleButton = (kategori) => {
+    setFilter(kategori);
+  }
 
   return (
     <div className={`w-full ${theme === "light" ? "bg-white" : "bg-black"}`}>
@@ -36,40 +64,78 @@ const HomePage = () => {
           </div>
         </div>
       </div>
-      <div className={`p-10 font-serif ${theme === " light" ? "text-red-900" : "text-white"}`}>
-        <div className={`w-full flex justify-between items-center font-semibold  mb-2`}>
-          <span className={`text-lg ${theme === "light" ? "text-red-900" : "text-white"}`}>Pengumuman</span>
-          <div className={`h-full border py-2 px-4 flex justify-center items-center rounded-full cursor-pointer ${theme === "light" ? "bg-red-900 text-white hover:bg-white hover:text-red-900" : "bg-white text-black hover:bg-black hover:text-white"}`}>
-            <span className="text-sm">View More</span>
+      <div className="max-w-6xl mx-auto my-8 text-red-900">
+        <div className="mb-8 items-center py-2">
+          <h1 className={`text-3xl font-bold ${theme === "light" ? "text-red-900" : "text-white"} `}>Pengumuman</h1>
+          <div className="flex flex-wrap gap-4 mt-4">
+            {category.map((item, index) => (
+              <Button key={index} name={item} handleButton={() => handleButton(item)} />
+            ))}
           </div>
         </div>
-        <div className="w-full grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 gap-4">
-          {photos.slice(0, 10).map((photo) => (
-            <div key={photo.id} className="border border-red-900 text-red-900 rounded-md p-2 shadow-sm">
-              <img
-                src={photo.url}
-                alt={photo.title}
-                className="w-full h-32 object-cover rounded-md"
-              />
-              <p className="text-xs mt-2 line-clamp-2">{photo.title}</p>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {currentItems.map((post) => (
+            <div key={post.id} class={`h-64 ${theme === "light" ? "bg-white" : "bg-gray-800"} rounded-xl shadow-md overflow-hidden border-l-4 border-red-500 transition-transform hover:scale-[1.02]`}>
+              <div class="p-5">
+                <div class="flex justify-between items-start mb-3">
+                  <span class="inline-block px-3 py-1 bg-red-100 text-red-700 text-sm font-medium rounded-full">
+                    {post.userId}
+                  </span>
+                  <span class={`text-xs ${theme === "light" ? "text-red-900" : "text-white"} `}>2 jam lalu</span>
+                </div>
+                <h3 class={`text-xl font-bold ${theme === "light" ? "text-red-900" : "text-white"}  mb-2 line-clamp-2`}>{post.title}</h3>
+                <p class="text-gray-600 mb-4 line-clamp-2">
+                  {post.body}
+                </p>
+                <div class="flex justify-between items-center mt-4">
+                  <span class="text-sm text-gray-500">
+                    <i class="far fa-calendar-alt mr-1"></i> 15 Okt 2025
+                  </span>
+                  <button class="text-blue-600 hover:text-blue-800 font-medium text-sm flex items-center">
+                    Baca Selengkapnya
+                    <i class="fas fa-chevron-right ml-1 text-xs"></i>
+                  </button>
+                </div>
+              </div>
             </div>
           ))}
         </div>
-      </div>
-      <div className={`relative h-20 ${theme === "light" ? "bg-white text-red-900" : "bg-red-900 text-white"}`}>
-        <div className="absolute right-0 left-0 bottom-0 px-10 h-20 border-t  pt-3 md:pt-0 flex flex-col md:flex-row justify-between items-center">
-          <div className="flex gap-5 justify-center items-center">
-            <IconStyle nameIcon={<BiLogoLinkedin />} />
-            <IconStyle nameIcon={<BiLogoYoutube />} />
-            <IconStyle nameIcon={<BiLogoWhatsapp />} />
-            <IconStyle nameIcon={<BiLogoInstagram />} />
-            <IconStyle nameIcon={<BiLogoFacebook />} />
-          </div>
-          <div className={`font-semibold text-lg ${theme === "light" ? "text-red-900" : "text-white"}`}>
-            <span>Copyrigth &copy; 2025. All right reserved.</span>
-          </div>
+
+        <div className="flex justify-center mt-10">
+          <nav className="flex items-center space-x-2">
+            <button
+              onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+              disabled={currentPage === 1}
+              className="px-3 py-2 rounded-lg bg-white border text-red-900 hover:bg-gray-100 disabled:opacity-50 cursor-pointer"
+            >
+              <BiCaretLeft />
+            </button>
+
+            {[...Array(totalPages)].map((_, i) => (
+              <button
+                key={i}
+                onClick={() => setCurrentPage(i + 1)}
+                className={`px-3 py-2 rounded-lg border ${currentPage === i + 1
+                  ? "bg-red-900 text-white"
+                  : "bg-white text-red-700 hover:bg-red-900 hover:text-white"
+                  } cursor-pointer`}
+              >
+                {i + 1}
+              </button>
+            ))}
+
+            <button
+              onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+              disabled={currentPage === totalPages}
+              className="px-3 py-2 rounded-lg bg-white border text-red-900 hover:bg-gray-100 disabled:opacity-50 cursor-pointer"
+            >
+              <BiCaretRight />
+            </button>
+          </nav>
         </div>
       </div>
+      <Footer />
     </div>
   )
 }

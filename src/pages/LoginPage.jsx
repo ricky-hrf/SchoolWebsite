@@ -1,13 +1,10 @@
 import { useContext, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
-import { ThemeContext } from "../context/ThemeContext";
 import { useNavigate } from "react-router-dom";
 
 const LoginPage = () => {
   const { login } = useContext(AuthContext);
   const navigate = useNavigate();
-  const { theme } = useContext(ThemeContext);
-
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -27,7 +24,7 @@ const LoginPage = () => {
       <div className="hidden md:flex col-span-7 h-full bg-[url('gambar/bg-login.jpg')] bg-cover relative ">
         <div className="absolute top-0 right-0 left-2/3 bottom-0 bg-gradient-to-r from-transparent to-white"></div>
       </div>
-      <div className={`col-span-12 md:col-span-5 h-full flex justify-center items-center shadow-xl ${theme === "light" ? "bg-white" : "bg-black"} `}>
+      <div className={`col-span-12 md:col-span-5 h-full flex justify-center items-center shadow-xl bg-white`}>
         <div className="absolute top-0 right-0 bottom-0 left-0 lg:left-1/2 flex justify-center items-center">
           <div className="w-100 shadow-2xl bg-white flex flex-col p-4 m-4 rounded-lg">
             <div className="w-full h-10 flex justify-center items-center">
