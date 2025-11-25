@@ -1,4 +1,4 @@
-import { BiSolidTrash, BiError, BiX, BiSolidEditAlt } from "react-icons/bi";
+import { BiSolidTrash, BiError, BiX } from "react-icons/bi";
 import IconStyle from "../atoms/IconStyle";
 import { useState } from "react";
 import ModalConfirm from "./ModalConfirm";

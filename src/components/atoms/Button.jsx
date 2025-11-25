@@ -6,7 +6,7 @@ const Button = ({ name, handleButton }) => {
   return (
     <button
       onClick={handleButton}
-      class={`w-25 h-10 font-semibold ${theme === "light" ? "bg-red-900 text-white hover:bg-red-800" : "bg-white text-red-900"} rounded-full  transition-colors cursor-pointer`}>
+      className={`w-25 h-10 font-semibold ${theme === "light" ? "bg-red-900 text-white hover:bg-red-800" : "bg-white text-red-900"} rounded-full  transition-colors cursor-pointer`}>
       {name}
     </button>
   )

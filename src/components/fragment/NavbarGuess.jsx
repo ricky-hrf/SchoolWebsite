@@ -7,26 +7,24 @@ import { useState } from "react";
 const NavbarGuess = ({ theme, toggleTheme }) => {
   const [open, setOpen] = useState(false);
   const menu = [
-    { name: "Home" }, { name: "Tutorials", icon: <BiCaretDown /> }, { name: "Blogs", icon: <BiCaretDown /> }];
+    { name: "Home" },
+    { name: "About" },
+    { name: "Courses" },
+    { name: "Blogs" }
+  ];
 
   return (
     <div className="w-full flex md:grid grid-cols-12 h-full shadow">
       <div className="col-span-6 md:col-span-3 w-full h-full flex justify-center items-center">
-        <span className="text-lg lg:text-2xl font-bold">Vichristus School</span>
+        <span className="text-lg lg:text-2xl font-bold">Seroro Academy</span>
       </div>
       <div className={`hidden col-span-6 lg:col-span-4 w-full md:flex justify-center items-center ${theme === "light" ? "text-red-800" : "text-white"}`}>
         <div className="w-full h-full flex justify-between p-2 gap-2">
-          <div className="w-full flex justify-center items-center">
-            <span className="px-2 hover:border-b cursor-pointer">Home</span>
-          </div>
-          <div className="w-full flex justify-center items-center">
-            <span className="px-2 hover:border-b cursor-pointer">Courses</span>
-            <div className="h-4 w-4 flex justify-center items-center cursor-pointer"><BiCaretDown /></div>
-          </div>
-          <div className="w-full flex justify-center items-center">
-            <span className="px-2 hover:border-b cursor-pointer">Blog</span>
-            <div className="h-4 w-4 flex justify-center items-center cursor-pointer"><BiCaretDown /></div>
-          </div>
+          {menu.map((item, index) => (
+            <div key={index} className="w-full flex justify-center items-center">
+              <span className="px-2 hover:border-b cursor-pointer">{item.name}</span>
+            </div>
+          ))}
         </div>
       </div>
       <div className="col-span-2 hidden lg:flex justify-around gap-4 items-center">
@@ -56,7 +54,9 @@ const NavbarGuess = ({ theme, toggleTheme }) => {
                 </div>
               </button>
             </Link>
-            <button className={`w-29 p-2 rounded-lg border ${theme === "light" ? "hover:bg-red-900 hover:text-white" : "hover:bg-white hover:text-gray-900"} cursor-pointer`}>Sign Up</button>
+            <Link to="/signup">
+              <button className={`w-29 p-2 rounded-lg border ${theme === "light" ? "hover:bg-red-900 hover:text-white" : "hover:bg-white hover:text-gray-900"} cursor-pointer`}>Sign Up</button>
+            </Link>
           </div>
           <div onClick={() => setOpen(!open)}
             className="h-full w-full flex justify-center items-center lg:hidden">
@@ -78,9 +78,9 @@ const NavbarGuess = ({ theme, toggleTheme }) => {
             <Link to="/login" className="w-full flex justify-center items-center border rounded-lg bg-red-900 text-white">
               <span className="p-2">Sign In</span>
             </Link>
-            <div className="w-full flex justify-center items-center border rounded-lg bg-red-900 text-white">
+            <Link to="/signup" className="w-full flex justify-center items-center border rounded-lg bg-red-900 text-white">
               <span className="p-2">Sign Up</span>
-            </div>
+            </Link>
           </div>
         </div>
       )}

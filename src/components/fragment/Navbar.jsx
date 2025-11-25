@@ -26,7 +26,7 @@ const Navbar = () => {
       {isAuthenticated ? (
         <div className="w-full flex md:grid grid-cols-12 h-full shadow">
           <div className="col-span-3 w-full h-full flex justify-between pl-2 md:justify-center items-center">
-            <span className="text-md lg:text-2xl font-bold">Vichristus School</span>
+            <span className="text-md lg:text-2xl font-bold">Seroro Academy</span>
             <div className="h-full flex justify-center items-center px-10 md:hidden">
               <IconStyle nameIcon={<BiSearchAlt2 />} />
             </div>

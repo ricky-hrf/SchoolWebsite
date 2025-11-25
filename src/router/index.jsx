@@ -7,6 +7,7 @@ import LoginPage from "../pages/LoginPage";
 import ProtectedRoute from "../components/ProtectedRoute";
 import DataMasters from "../pages/DataMasters";
 import Event from "../pages/Events";
+import SignUp from "../pages/SignUp";
 
 const router = createBrowserRouter([
   {
@@ -24,6 +25,10 @@ const router = createBrowserRouter([
   {
     path: "/login",
     element: <LoginPage />
+  },
+  {
+    path: "/signup",
+    element: <SignUp />
   },
   {
     path: "/user-management",

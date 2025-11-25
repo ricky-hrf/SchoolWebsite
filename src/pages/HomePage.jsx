@@ -8,6 +8,7 @@ import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
 import Button from "../components/atoms/Button";
 import { useEffect } from "react";
+import CurrentActivities from "../components/fragment/CurrentActivities";
 
 const HomePage = () => {
   const [filter, setFilter] = useState(null);
@@ -55,7 +56,7 @@ const HomePage = () => {
     <div className={`w-full ${theme === "light" ? "bg-white" : "bg-black"}`}>
       <Navbar />
       <div className="relative h-screen w-full">
-        <div className="w-full h-full bg-[url('gambar/school1.jpg')] bg-cover">
+        <div className="w-full h-full bg-gradient-to-br from-blue-400 to-red-300">
         </div>
         <div className={`absolute inset-0 ${theme === "light" ? "bg-black/50" : "bg-black/70"} flex items-center`}>
           <div className="w-full mx-10 flex justify-between">
@@ -135,8 +136,9 @@ const HomePage = () => {
           </nav>
         </div>
       </div>
+      <CurrentActivities />
       <Footer />
-    </div>
+    </div >
   )
 }
 export default HomePage;
