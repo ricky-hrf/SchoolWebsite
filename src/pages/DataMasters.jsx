@@ -3,6 +3,8 @@ import AdminLayout from "../layouts/AdminLayout";
 import { ThemeContext } from "../context/ThemeContext";
 import { DataSidebar } from "../config/DataSidebar";
 import { BiX, BiChevronDown, BiChevronUp, BiReset, BiPlus } from "react-icons/bi";
+import { useForm } from "react-hook-form";
+import axios from "axios";
 
 const DataMasters = () => {
   const { theme } = useContext(ThemeContext);
@@ -31,6 +33,23 @@ const DataMasters = () => {
     setAddUser(!addUser);
   }
 
+  const { register, handleSubmit, reset, formState: { errors, isSubmitting } } = useForm();
+
+  const onSubmit = async (data) => {
+    try {
+      const res = await axios.post(
+        "http://localhost:3000/users",
+        data
+      );
+      console.log(res.data);
+      alert("data berhasil ditambahkan");
+      reset();
+    } catch (error) {
+      console.error(error);
+      alert(error.response?.data?.error || "data berhasil ditambahkan");
+    }
+  }
+
   return (
     <AdminLayout addUser={handleAddUser} >
       <div className={`w-full p-2 ${theme === "light" ? "text-red-900" : "text-white"} relative`}>
@@ -49,7 +68,7 @@ const DataMasters = () => {
                   <span className="font-semibold text-xl">Add New User</span>
                   <div className="w-8 h-8 flex justify-center items-center rounded-full text-2xl hover:bg-red-50 cursor-pointer" onClick={() => setAddUser(!addUser)}><BiX /></div>
                 </div>
-                <form className="space-y-6">
+                <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
                   <div>
                     <label htmlFor="nama" className="block text-sm font-medium mb-1">
                       Nama Lengkap <span className="text-red-500">*</span>
@@ -57,10 +76,13 @@ const DataMasters = () => {
                     <input
                       type="text"
                       id="nama"
-                      name="nama"
                       placeholder="Masukkan nama lengkap"
+                      {...register("fullname", { required: "nama wajib diisi" })}
                       className={`w-full px-4 py-2 rounded-lg border focus:outline-none focus:ring-2 focus:border-transparent transition duration-200`}
                     />
+                    {errors.fullname && (
+                      <p className="text-red-500 text-sm mt-1">{errors.fullname.message}</p>
+                    )}
                   </div>
                   <div>
                     <label htmlFor="email" className="block text-sm font-medium mb-1">
@@ -69,19 +91,38 @@ const DataMasters = () => {
                     <input
                       type="email"
                       id="email"
-                      name="email"
                       placeholder="contoh@email.com"
+                      {...register("email", {
+                        required: "email wajib diisi",
+                      })}
+                      className={`w-full px-4 py-2 rounded-lg border  focus:outline-none focus:ring-2 focus:border-transparent transition duration-200`}
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="password" className="block text-sm font-medium mb-1">
+                      password <span className="text-red-500">*</span>
+                    </label>
+                    <input
+                      type="password"
+                      id="password"
+                      placeholder="contoh@email.com"
+                      {...register("password", {
+                        required: "password wajib diisi",
+                      })}
                       className={`w-full px-4 py-2 rounded-lg border  focus:outline-none focus:ring-2 focus:border-transparent transition duration-200`}
                     />
                   </div>
 
                   <div>
-                    <label htmlFor="alamat" className="block text-sm font-medium mb-1">
+                    <label htmlFor="address" className="block text-sm font-medium mb-1">
                       Alamat Lengkap <span className="text-red-500">*</span>
                     </label>
                     <textarea
                       placeholder="Masukkan alamat lengkap"
                       rows="4"
+                      {...register("address", {
+                        required: "alamat wajib diisi"
+                      })}
                       className={`w-full px-4 py-2 rounded-lg border border-gray-300
                         focus:outline-none focus:ring-2 focus:border-transparent transition duration-200 resize-none`}
                     />
@@ -89,6 +130,7 @@ const DataMasters = () => {
                   <div className="flex flex-col sm:flex-row gap-3 pt-4">
                     <button
                       type="button"
+                      onClick={() => reset()}
                       className="flex-1 flex justify-center items-center gap-4 bg-gray-100 text-gray-700 py-2 px-4 rounded-lg text-lg font-medium hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2 transition duration-200 cursor-pointer"
                     >
                       <BiReset />
@@ -96,11 +138,12 @@ const DataMasters = () => {
                     </button>
                     <button
                       type="submit"
+                      disabled={isSubmitting}
                       className="flex-1 bg-gradient-to-br from-red-500 to-red-900 text-white py-2 px-4 text-lg rounded-lg font-medium hover:from-red-700 hover:to-red-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition duration-200 shadow-md cursor-pointer"
                     >
                       <span className="flex items-center justify-center">
                         <BiPlus />
-                        Tambah Data
+                        {isSubmitting ? "menyimpan..." : "Tambah Data"}
                       </span>
                     </button>
 
