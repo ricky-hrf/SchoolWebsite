@@ -56,9 +56,9 @@ const HomePage = () => {
     <div className={`w-full ${theme === "light" ? "bg-white" : "bg-black"}`}>
       <Navbar />
       <div className="relative h-screen w-full">
-        <div className="w-full h-full bg-gradient-to-br from-blue-400 to-red-300">
+        <div className="w-full h-full bg-[url('gambar/bg-home.jpg')] bg-cover">
         </div>
-        <div className={`absolute inset-0 ${theme === "light" ? "bg-black/50" : "bg-black/70"} flex items-center`}>
+        <div className={`absolute inset-0 ${theme === "light" ? "bg-black/30" : "bg-black/70"} flex items-center`}>
           <div className="w-full mx-10 flex justify-between">
             <IconStyle nameIcon={<BiChevronLeft />} />
             <IconStyle nameIcon={<BiChevronRight />} />

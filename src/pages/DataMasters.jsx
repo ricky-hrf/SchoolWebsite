@@ -3,7 +3,7 @@ import AdminLayout from "../layouts/AdminLayout";
 import { ThemeContext } from "../context/ThemeContext";
 import { DataSidebar } from "../config/DataSidebar";
 import { BiPlus } from "react-icons/bi";
-import InsertUser from "../components/fragment/CreateUser";
+import CreateUser from "../components/fragment/CreateUser";
 import ReadUsers from "../components/fragment/ReadUsers";
 
 const DataMasters = () => {
@@ -45,7 +45,7 @@ const DataMasters = () => {
             </div>
           </form>
           {addUser && (
-            <InsertUser setAddUser={setAddUser} addUser={addUser} onSuccess={fetchUsers} />
+            <CreateUser setAddUser={setAddUser} addUser={addUser} onSuccess={fetchUsers} />
           )}
         </div>
         <ReadUsers users={users} loading={loading} />
