@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import AdminLayout from "../layouts/AdminLayout";
 import { ThemeContext } from "../context/ThemeContext";
 import { DataSidebar } from "../config/DataSidebar";
@@ -9,32 +9,13 @@ import ReadUsers from "../components/fragment/ReadUsers";
 const DataMasters = () => {
   const { theme } = useContext(ThemeContext);
   const [addUser, setAddUser] = useState(false);
-  const [users, setUsers] = useState([]);
-  const [loading, setLoading] = useState(true);
-
-  const fetchUsers = async () => {
-    try {
-      const response = await fetch("http://localhost:3000/users");
-      const data = await response.json();
-      setUsers(data.data);
-    } catch (error) {
-      console.error("gagal memuat data ..", error);
-    } finally {
-      setTimeout(() => {
-        setLoading(false);
-      }, 100)
-    }
-  };
-  useEffect(() => {
-    fetchUsers();
-  }, []);
 
   const handleAddUser = () => {
-    setAddUser(!addUser);
+    setAddUser(true);
   }
 
   return (
-    <AdminLayout addUser={handleAddUser} >
+    <AdminLayout >
       <div className={`w-full p-2 ${theme === "light" ? "text-red-900" : "text-white"} relative`}>
         <div className="flex justify-between mb-2 pb-2 border-b">
           <h1 className="text-2xl font-semibold">{DataSidebar[1].menu}</h1>
@@ -45,10 +26,10 @@ const DataMasters = () => {
             </div>
           </form>
           {addUser && (
-            <CreateUser setAddUser={setAddUser} addUser={addUser} onSuccess={fetchUsers} />
+            <CreateUser setAddUser={setAddUser} />
           )}
         </div>
-        <ReadUsers users={users} loading={loading} />
+        <ReadUsers />
       </div>
     </AdminLayout>
   )
