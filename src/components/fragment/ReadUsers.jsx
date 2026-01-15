@@ -1,11 +1,26 @@
 import { BiEdit, BiTrash } from "react-icons/bi";
 import { useQuery } from "@tanstack/react-query";
 import { fetchUsers } from "../../services/usersApi";
-import { CreateUser } from "../fragment/CreateUser";
 import { useState } from "react";
+import UpdateUser from "../fragment/UpdateUser";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { deleteUserById } from "../../services/usersApi";
 
 const ReadUsers = () => {
-  const [edit, setEdit] = useState(false);
+  const queryClient = useQueryClient();
+
+  // menghapus data
+  const deleteMutation = useMutation({
+    mutationFn: deleteUserById,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["users"] });
+    },
+    onError: (error) => {
+      alert(error.response?.data?.error || "gagal menghapus data");
+    }
+  });
+
+  const [editUserId, setEditUserId] = useState(false);
 
   // menampilkan data
   const { data, isLoading, isError } = useQuery({
@@ -21,11 +36,6 @@ const ReadUsers = () => {
     )
   }
   if (isError) return <p>Gagal memuat data</p>;
-
-  // edit data
-  const handleEditUser = () => {
-    setEdit(true);
-  }
 
   return (
     <>
@@ -50,17 +60,23 @@ const ReadUsers = () => {
               <td className="px-4 py-3 text-sm text-gray-700">{user.address}</td>
               <td className="px-4 py-3 text-sm text-gray-700">{user.created_at}</td>
               <td className="flex justify-center py-2 text-sm text-gray-700">
-                <button
-                  type="button"
-                  className="w-15 h-6 flex justify-center items-center text-green-600 gap-2 border rounded-sm cursor-pointer"
-                  onClick={handleEditUser}
-                >
-                  <BiEdit />
-                  <span>Edit</span>
-                </button>
+                <form action="">
+                  <button
+                    type="button"
+                    className="w-15 h-6 flex justify-center items-center text-green-600 hover:bg-green-300 hover:text-gray-700 gap-2 border rounded-sm cursor-pointer"
+                    onClick={() => setEditUserId(user.id)}
+                  >
+                    <BiEdit />
+                    <span>Edit</span>
+                  </button>
+                </form>
               </td>
               <td className="py-2 text-sm text-gray-700">
-                <button type="button" className="w-15 h-6 border flex justify-center items-center text-red-600 rounded-sm">
+                <button
+                  onClick={() => deleteMutation.mutate(user.id)}
+                  type="button"
+                  className="w-15 h-6 border flex justify-center items-center text-red-600 rounded-sm"
+                >
                   <BiTrash />
                   <span>Hapus</span>
                 </button>
@@ -68,11 +84,13 @@ const ReadUsers = () => {
             </tr>
           ))}
         </tbody>
-      </table>
+      </table >
       {/* modal edit user */}
-      {edit && (
-        <CreateUser />
-      )}
+      {
+        editUserId && (
+          <UpdateUser userId={editUserId} onClose={() => setEditUserId(null)} />
+        )
+      }
     </>
   )
 }

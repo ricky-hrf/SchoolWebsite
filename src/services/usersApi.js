@@ -22,3 +22,9 @@ export const updateUser = async (id, data) => {
   const res = await axiosInstance.put(`/users/:${id}`, data);
   return res.data;
 }
+
+// endpoint hapus users berdasarkan id
+export const deleteUserById = async (id) => {
+  const res = await axiosInstance.delete(`/users/${id}`);
+  return res.data;
+}
