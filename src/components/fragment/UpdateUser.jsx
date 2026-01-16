@@ -6,6 +6,8 @@ import { getUserById, updateUser } from "../../services/usersApi";
 const EditUser = ({ userId, onClose }) => {
   const queryClient = useQueryClient();
 
+  const { register, handleSubmit, reset, formState: { errors, isSubmitting } } = useForm();
+
   // ambil data user
   const { isLoading } = useQuery({
     queryKey: ["user", userId],
@@ -21,16 +23,15 @@ const EditUser = ({ userId, onClose }) => {
     mutationFn: updateUser,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["users"] });
-      onclose();
+      onClose();
     },
     onError: (error) => {
-      alert(error.response?.data?.error || "gagal update data");
+      alert(error.response?.data?.error || error.message || "gagal update data");
     },
   });
 
-  const { register, handleSubmit, reset, formState: { errors, isSubmitting } } = useForm();
-
   const onSubmit = (formData) => {
+    console.log(formData);
     updateMutation.mutate({
       id: userId,
       data: formData,

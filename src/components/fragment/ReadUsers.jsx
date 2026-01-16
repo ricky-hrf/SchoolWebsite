@@ -42,44 +42,43 @@ const ReadUsers = () => {
       <table className="min-w-full border border-gray-300 rounded-lg overflow-hidden shadow-md">
         <thead className="bg-gray-800 text-white">
           <tr>
-            <th className="px-4 py-3 text-left text-sm font-semibold">No</th>
-            <th className="px-4 py-3 text-left text-sm font-semibold">Name</th>
-            <th className="px-4 py-3 text-left text-sm font-semibold">Email</th>
-            <th className="px-4 py-3 text-left text-sm font-semibold">Address</th>
-            <th className="px-4 py-3 text-left text-sm font-semibold">Terdaftar</th>
-            <th colSpan={2} className="py-3 text-center text-sm font-semibold">Action</th>
+            <th className="py-3 text-center py-3 text-[8px] md:text-[12px] lg:text-sm font-semibold">No</th>
+            <th className="py-3 w-64 text-[8px] md:text-[12px] lg:text-sm font-semibold">Full Name</th>
+            <th className="px-4 py-3 text-left text-[8px] md:text-[12px] lg:text-sm font-semibold">Terdaftar</th>
+            <th className="px-4 py-3 text-left text-[8px] md:text-[12px] lg:text-sm font-semibold">Update</th>
+            <th className="hidden md:block py-3 text-center text-[8px] md:text-[12px] lg:text-sm font-semibold">Action</th>
           </tr>
         </thead>
         <tbody>
           {data.data.map((user, index) => (
             <tr key={user.id} className={`${index % 2 === 0 ? "bg-gray-50" : "bg-white"
               } hover:bg-gray-100 transition`}>
-              <td className="px-4 py-3 text-sm text-gray-700">{index + 1}</td>
-              <td className="px-4 py-3 text-sm text-gray-800 font-medium">{user.fullname}</td>
-              <td className="px-4 py-3 text-sm text-gray-700">{user.email}</td>
-              <td className="px-4 py-3 text-sm text-gray-700">{user.address}</td>
-              <td className="px-4 py-3 text-sm text-gray-700">{user.created_at}</td>
-              <td className="flex justify-center py-2 text-sm text-gray-700">
-                <form action="">
+              <td className="px-2 md:px-4 py-3 text-[8px] md:text-[12px] lg:text-sm text-center text-gray-700">{index + 1}</td>
+              <td className="py-3 px-2 md:px-4 text-[8px] md:text-[12px] lg:text-sm text-gray-800 font-medium">{user.fullname}</td>
+              <td className="px-1 md:px-2 py-3 text-[8px] md:text-[12px] lg:text-sm text-gray-700">{user.created_at}</td>
+              <td className="px-1 md:px-2 py-3 text-[8px] md:text-[12px] lg:text-sm text-gray-700">{user.updated_at}</td>
+              <td className="hidden md:table-cell py-2 text-sm text-gray-700">
+                <div className="flex gap-2 justify-center">
+
                   <button
                     type="button"
-                    className="w-15 h-6 flex justify-center items-center text-green-600 hover:bg-green-300 hover:text-gray-700 gap-2 border rounded-sm cursor-pointer"
+                    className="w-20 h-7 flex justify-center items-center text-green-600 hover:bg-green-300 hover:text-gray-700 gap-1 border rounded-sm cursor-pointer"
                     onClick={() => setEditUserId(user.id)}
                   >
                     <BiEdit />
                     <span>Edit</span>
                   </button>
-                </form>
-              </td>
-              <td className="py-2 text-sm text-gray-700">
-                <button
-                  onClick={() => deleteMutation.mutate(user.id)}
-                  type="button"
-                  className="w-15 h-6 border flex justify-center items-center text-red-600 rounded-sm"
-                >
-                  <BiTrash />
-                  <span>Hapus</span>
-                </button>
+
+                  <button
+                    onClick={() => deleteMutation.mutate(user.id)}
+                    type="button"
+                    className="w-20 h-7 flex justify-center items-center text-red-600 hover:bg-red-200 gap-1 border rounded-sm"
+                  >
+                    <BiTrash />
+                    <span>Hapus</span>
+                  </button>
+
+                </div>
               </td>
             </tr>
           ))}

@@ -18,8 +18,8 @@ export const getUserById = async (id) => {
   return res.data;
 }
 
-export const updateUser = async (id, data) => {
-  const res = await axiosInstance.put(`/users/:${id}`, data);
+export const updateUser = async ({ id, data }) => {
+  const res = await axiosInstance.put(`/users/${id}`, data);
   return res.data;
 }
 
