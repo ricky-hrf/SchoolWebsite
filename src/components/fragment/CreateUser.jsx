@@ -25,14 +25,14 @@ const InsertUser = ({ setAddUser }) => {
 
   return (
     <div className="fixed z-1 top-0 bottom-0 right-0 left-0 flex justify-center items-center bg-black/50">
-      <div className="flex flex-col justify-center w-[50%] bg-white shadow-xl rounded-xl px-8 py-4 gap-4">
+      <div className="flex flex-col justify-center w-[80%] md:w-[50%] bg-white shadow-xl rounded-xl px-4 md:px-8 py-4 gap-4">
         <div className="flex justify-between items-center">
-          <span className="font-semibold text-xl">Add New User</span>
-          <div className="w-8 h-8 flex justify-center items-center rounded-full text-2xl hover:bg-red-50 cursor-pointer" onClick={() => setAddUser(false)}><BiX /></div>
+          <span className="font-semibold text-xs md:text-sm lg:text-xl">Add New User</span>
+          <div className="w-8 h-8 flex justify-center items-center rounded-full text-lg md:text-2xl hover:bg-red-50 cursor-pointer" onClick={() => setAddUser(false)}><BiX /></div>
         </div>
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
           <div>
-            <label htmlFor="nama" className="block text-sm font-medium mb-1">
+            <label htmlFor="nama" className="block text-xs md:text-sm font-medium mb-1">
               Nama Lengkap <span className="text-red-500">*</span>
             </label>
             <input
@@ -40,14 +40,14 @@ const InsertUser = ({ setAddUser }) => {
               id="nama"
               placeholder="Masukkan nama lengkap"
               {...register("fullname", { required: "nama wajib diisi" })}
-              className={`w-full px-4 py-2 rounded-lg border focus:outline-none focus:ring-2 focus:border-transparent transition duration-200`}
+              className={`w-full px-2 md:px-4 py-1 md:py-2 text-xs md:text-md rounded-[5px] md:rounded-lg border border-red-200 focus:outline-none focus:ring-2 focus:border-transparent transition duration-200`}
             />
             {errors.fullname && (
-              <p className="text-red-500 text-sm mt-1">{errors.fullname.message}</p>
+              <p className="text-red-500 text-xs md:text-sm mt-1">{errors.fullname.message}</p>
             )}
           </div>
           <div>
-            <label htmlFor="email" className="block text-sm font-medium mb-1">
+            <label htmlFor="email" className="block text-xs md:text-sm font-medium mb-1">
               Email <span className="text-red-500">*</span>
             </label>
             <input
@@ -57,48 +57,30 @@ const InsertUser = ({ setAddUser }) => {
               {...register("email", {
                 required: "email wajib diisi",
               })}
-              className={`w-full px-4 py-2 rounded-lg border  focus:outline-none focus:ring-2 focus:border-transparent transition duration-200`}
+              className={`w-full px-2 md:px-4 py-1 md:py-2 text-xs md:text-md rounded-[5px] md:rounded-lg border border-red-200 focus:outline-none focus:ring-2 focus:border-transparent transition duration-200`}
             />
             {errors.email && (
               <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>
             )}
           </div>
           <div>
-            <label htmlFor="password" className="block text-sm font-medium mb-1">
-              password <span className="text-red-500">*</span>
-            </label>
-            <input
-              type="password"
-              id="password"
-              placeholder=""
-              {...register("password", {
-                required: "password wajib diisi",
-              })}
-              className={`w-full px-4 py-2 rounded-lg border  focus:outline-none focus:ring-2 focus:border-transparent transition duration-200`}
-            />
-            {errors.password && (
-              <p className="text-red-500 text-sm mt-1">{errors.password.message}</p>
-            )}
-          </div>
-
-          <div>
-            <label htmlFor="address" className="block text-sm font-medium mb-1">
+            <label htmlFor="address" className="block text-xs md:text-sm font-medium mb-1">
               Alamat Lengkap <span className="text-red-500">*</span>
             </label>
             <textarea
               placeholder="Masukkan alamat lengkap"
-              rows="4"
+              rows="3"
               {...register("address", {
                 required: "alamat wajib diisi"
               })}
-              className={`w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:border-transparent transition duration-200 resize-none`}
+              className={`w-full px-2 md:px-4 py-2 text-xs md:text-md rounded-lg border border-red-200 focus:outline-none focus:ring-2 focus:border-transparent transition duration-200 resize-none`}
             />
           </div>
-          <div className="flex flex-col sm:flex-row gap-3 pt-4">
+          <div className="flex flex-col sm:flex-row gap-3">
             <button
               type="button"
               onClick={() => reset()}
-              className="flex-1 flex justify-center items-center gap-4 bg-gray-100 text-gray-700 py-2 px-4 rounded-lg text-lg font-medium hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2 transition duration-200 cursor-pointer"
+              className="flex-1 flex justify-center items-center gap-4 bg-red-100 text-red-900 py-1 md:py-2 px-4 rounded-[5px] md:rounded-lg text-sm md:text-md lg:text-lg font-medium hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2 transition duration-200 cursor-pointer"
             >
               <BiReset />
               Reset Form
@@ -106,7 +88,7 @@ const InsertUser = ({ setAddUser }) => {
             <button
               type="submit"
               disabled={isSubmitting}
-              className="flex-1 bg-gradient-to-br from-red-500 to-red-900 text-white py-2 px-4 text-lg rounded-lg font-medium hover:from-red-700 hover:to-red-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition duration-200 shadow-md cursor-pointer"
+              className="flex-1 bg-gradient-to-br from-red-500 to-red-900 text-white py-1 md:py-2 px-4 text-sm md:text-md lg:text-lg rounded-[5px] md:rounded-lg font-medium hover:from-red-700 hover:to-red-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition duration-200 shadow-md cursor-pointer"
             >
               <span className="flex items-center justify-center">
                 <BiPlus />

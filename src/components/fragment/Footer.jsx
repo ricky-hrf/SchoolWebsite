@@ -17,7 +17,7 @@ const Footer = () => {
           <IconStyle nameIcon={<BiLogoFacebook />} />
         </div>
         <div className={`font-semibold text-lg ${theme === "light" ? "text-red-900" : "text-white"}`}>
-          <span>Copyrigth &copy; 2025. All right reserved.</span>
+          <span>Copyrigth &copy; 2026. All right reserved.</span>
         </div>
       </div>
     </div>

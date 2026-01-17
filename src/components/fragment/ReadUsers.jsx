@@ -1,12 +1,15 @@
 import { BiEdit, BiTrash } from "react-icons/bi";
 import { useQuery } from "@tanstack/react-query";
 import { fetchUsers } from "../../services/usersApi";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import UpdateUser from "../fragment/UpdateUser";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { deleteUserById } from "../../services/usersApi";
+import { ThemeContext } from "../../context/ThemeContext";
+import { Link } from "react-router-dom";
 
 const ReadUsers = () => {
+  const { theme } = useContext(ThemeContext);
   const queryClient = useQueryClient();
 
   // menghapus data
@@ -40,39 +43,43 @@ const ReadUsers = () => {
   return (
     <>
       <table className="min-w-full border border-gray-300 rounded-lg overflow-hidden shadow-md">
-        <thead className="bg-gray-800 text-white">
+        <thead className={`${theme === "light" ? "bg-red-900" : "bg-gray-900"} text-white`}>
           <tr>
-            <th className="py-3 text-center py-3 text-[8px] md:text-[12px] lg:text-sm font-semibold">No</th>
-            <th className="py-3 w-64 text-[8px] md:text-[12px] lg:text-sm font-semibold">Full Name</th>
-            <th className="px-4 py-3 text-left text-[8px] md:text-[12px] lg:text-sm font-semibold">Terdaftar</th>
-            <th className="px-4 py-3 text-left text-[8px] md:text-[12px] lg:text-sm font-semibold">Update</th>
-            <th className="hidden md:block py-3 text-center text-[8px] md:text-[12px] lg:text-sm font-semibold">Action</th>
+            <th className="py-3 text-center text-[8px] md:text-[12px] lg:text-sm font-semibold">No</th>
+            <th className="py-3 text-center text-[8px] md:text-[12px] lg:text-sm font-semibold">Avatar</th>
+            <th className="py-3 text-[8px] md:text-[12px] lg:text-sm font-semibold">Full Name</th>
+            <th className="hidden lg:table-cell px-4 py-3 text-left text-sm font-semibold">Register</th>
+            <th className="hidden lg:table-cell px-4 py-3 text-left text-sm font-semibold">Update</th>
+            <th className="py-3 text-center text-[8px] md:text-[12px] lg:text-sm font-semibold">Action</th>
           </tr>
         </thead>
         <tbody>
           {data.data.map((user, index) => (
-            <tr key={user.id} className={`${index % 2 === 0 ? "bg-gray-50" : "bg-white"
-              } hover:bg-gray-100 transition`}>
+            <tr key={user.id} className={`${index % 2 === 0 ? `${theme === "light" ? "bg-red-50" : "bg-gray-800"}` : `${theme === "light" ? "bg-white" : "bg-gray-700"}`
+              } ${theme === "light" ? "hover:bg-red-100" : "hover:bg-gray-500"} transition`}>
               <td className="px-2 md:px-4 py-3 text-[8px] md:text-[12px] lg:text-sm text-center text-gray-700">{index + 1}</td>
-              <td className="py-3 px-2 md:px-4 text-[8px] md:text-[12px] lg:text-sm text-gray-800 font-medium">{user.fullname}</td>
-              <td className="px-1 md:px-2 py-3 text-[8px] md:text-[12px] lg:text-sm text-gray-700">{user.created_at}</td>
-              <td className="px-1 md:px-2 py-3 text-[8px] md:text-[12px] lg:text-sm text-gray-700">{user.updated_at}</td>
-              <td className="hidden md:table-cell py-2 text-sm text-gray-700">
-                <div className="flex gap-2 justify-center">
-
-                  <button
+              <td className="px-2 md:px-4 text-center">
+                <img src="" alt="profile" className="border h-8 w-8 rounded-full" />
+              </td>
+              <td className={`py-3 px-2 md:px-4 text-[8px] md:text-[12px] lg:text-sm ${theme === "light" ? "text-gray-800" : "text-white"} font-medium`}>{user.fullname}</td>
+              <td className={`hidden lg:table-cell px-2 py-3 text-sm ${theme === "light" ? "text-gray-800" : "text-white"}`}>{user.created_at}</td>
+              <td className={`hidden lg:table-cell px-2 py-3 text-sm ${theme === "light" ? "text-gray-800" : "text-white"}`}>{user.updated_at}</td>
+              <td className="table-cell py-2 text-sm text-gray-700">
+                <div className="flex gap-[2px] md:gap-2 justify-center">
+                  <Link
                     type="button"
-                    className="w-20 h-7 flex justify-center items-center text-green-600 hover:bg-green-300 hover:text-gray-700 gap-1 border rounded-sm cursor-pointer"
-                    onClick={() => setEditUserId(user.id)}
+                    to={`/user-management/${user.id}`}
+                    className="w-10 md:w-15 lg:w-20 h-5 md:h-7 flex justify-center items-center text-[8px] md:text-[12px] lg:text-sm text-amber-600 hover:bg-amber-300 hover:text-gray-700 gap-1 border rounded-sm cursor-pointer"
+                  // onClick={() => setEditUserId(user.id)}
                   >
                     <BiEdit />
-                    <span>Edit</span>
-                  </button>
+                    <span>Detail</span>
+                  </Link>
 
                   <button
                     onClick={() => deleteMutation.mutate(user.id)}
                     type="button"
-                    className="w-20 h-7 flex justify-center items-center text-red-600 hover:bg-red-200 gap-1 border rounded-sm"
+                    className="w-10 md:w-15 lg:w-20 h-5 md:h-7 flex justify-center items-center text-[8px] md:text-[12px] lg:text-sm text-red-600 hover:bg-red-200 gap-1 border rounded-sm cursor-pointer"
                   >
                     <BiTrash />
                     <span>Hapus</span>
