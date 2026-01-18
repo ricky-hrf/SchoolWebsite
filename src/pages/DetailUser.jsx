@@ -34,8 +34,10 @@ const DetailUser = () => {
     mutationFn: updateUser,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["users"] });
+      setEdit(true);
     },
     onError: (error) => {
+      console.log("ERROR:", error.response?.data);
       alert(error.response?.data?.error || error.message || "gagal update data");
     },
   });
@@ -87,80 +89,90 @@ const DetailUser = () => {
             </div>
           </div>
         </div>
-        <div className="mt-4 grid grid-cols-1 md:grid-cols-12 gap-4">
-          <div className={`col-span-4 h-40 md:h-80 p-2`}>
-            <div className={`h-full w-full shadow-lg`}>
-              <img src={''} alt={"avatar"} className="h-full w-full object-cover rounded-lg" />
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <div className="relative mt-4 grid grid-cols-1 md:grid-cols-12 gap-4">
+            <div className={`col-span-4 h-40 md:h-80 p-2`}>
+              <div className={`h-full w-full shadow-lg`}>
+                <img src={''} alt={"avatar"} className="h-full w-full object-cover rounded-lg" />
+              </div>
+            </div>
+            <div className={`col-span-8 flex flex-col gap-2 p-2 font-semibold rounded-lg shadow-lg shadow-red-300`}>
+              <div className="grid grid-cols-12 text-xs md:text-[14px] lg:text-[16px]">
+                <label className="col-span-2">Nama</label>
+                <div className="col-span-10 flex gap-2">
+                  <span>:</span>
+                  {edit ? (
+                    <span>{data.data.fullname}</span>
+                  ) : (
+                    <input
+                      name="fullname"
+                      type="text"
+                      {...register("fullname")}
+                      className="border-b w-full focus:outline-none focus:ring-0 focus:shadow-sm transition" />
+                  )}
+                </div>
+              </div>
+              <div className="grid grid-cols-12 text-xs md:text-[14px] lg:text-[16px]">
+                <div className="col-span-2">Email</div>
+                <div className="col-span-10 flex gap-2">
+                  <span>:</span>
+                  {edit ? (
+                    <span>{data.data.email}</span>
+                  ) : (
+                    <input
+                      type="email"
+                      {...register("email")}
+                      className="border-b w-full focus:outline-none focus:ring-0 focus:shadow-sm transition duration-300" />
+                  )}
+                </div>
+              </div>
+              <div className="grid grid-cols-12 text-xs md:text-[14px] lg:text-[16px]">
+                <div className="col-span-2">Address</div>
+                <div className="col-span-10 flex gap-2">
+                  <span>:</span>
+                  {edit ? (
+                    <span>{data.data.address}</span>
+                  ) : (
+                    <textarea
+                      rows="2"
+                      {...register("address")}
+                      className="border-b w-full focus:outline-none focus:ring-0 focus:shadow-sm transition duration-300"
+                    />
+                  )}
+                </div>
+              </div>
+              <div className="grid grid-cols-12 text-xs md:text-[14px] lg:text-[16px]">
+                <div className="col-span-2">Role</div>
+                <div className="col-span-10 flex gap-2">
+                  <span>:</span>
+                  <span>user</span>
+                </div>
+              </div>
+              <div className="grid grid-cols-12 text-xs md:text-[14px] lg:text-[16px]">
+                <div className="col-span-2">Register</div>
+                <div className="col-span-10 flex gap-2">
+                  <span>:</span>
+                  <span>{data.data.created_at}</span>
+                </div>
+              </div>
+              <div className="grid grid-cols-12 text-xs md:text-[14px] lg:text-[16px]">
+                <div className="col-span-2">Update</div>
+                <div className="col-span-10 flex gap-2">
+                  <span>:</span>
+                  <span>{data.data.updated_at}</span>
+                </div>
+              </div>
+              {!edit && (
+                <button
+                  type="submit"
+                  className="mt-auto bg-red-900 text-white px-4 py-1 text-xs md:text-[14px] lg:text-[16px] rounded shadow-lg hover:bg-red-800 cursor-pointer"
+                >
+                  Save
+                </button>
+              )}
             </div>
           </div>
-          <div className={`col-span-8 flex flex-col gap-2 p-2 font-semibold rounded-2xl`}>
-            <div className="grid grid-cols-12">
-              <div className="col-span-2">Nama</div>
-              <div className="col-span-10 flex gap-2">
-                <span>:</span>
-                {edit ? (
-                  <span>{data.data.fullname}</span>
-                ) : (
-                  <input
-                    name="fullname"
-                    type="text"
-                    {...register("fullname")}
-                    className="border-b w-full focus:outline-none focus:ring-0 focus:shadow-sm transition" />
-                )}
-              </div>
-            </div>
-            <div className="grid grid-cols-12">
-              <div className="col-span-2">Email</div>
-              <div className="col-span-10 flex gap-2">
-                <span>:</span>
-                {edit ? (
-                  <span>{data.data.email}</span>
-                ) : (
-                  <input
-                    type="email"
-                    {...register("email")}
-                    className="border-b w-full focus:outline-none focus:ring-0 focus:shadow-sm transition duration-300" />
-                )}
-              </div>
-            </div>
-            <div className="grid grid-cols-12">
-              <div className="col-span-2">Address</div>
-              <div className="col-span-10 flex gap-2">
-                <span>:</span>
-                {edit ? (
-                  <span>{data.data.address}</span>
-                ) : (
-                  <textarea
-                    rows="2"
-                    {...register("address")}
-                    className="border-b w-full focus:outline-none focus:ring-0 focus:shadow-sm transition duration-300"
-                  />
-                )}
-              </div>
-            </div>
-            <div className="grid grid-cols-12">
-              <div className="col-span-2">Role</div>
-              <div className="col-span-10 flex gap-2">
-                <span>:</span>
-                <span>user</span>
-              </div>
-            </div>
-            <div className="grid grid-cols-12">
-              <div className="col-span-2">Register</div>
-              <div className="col-span-10 flex gap-2">
-                <span>:</span>
-                <span>{data.data.created_at}</span>
-              </div>
-            </div>
-            <div className="grid grid-cols-12">
-              <div className="col-span-2">Update</div>
-              <div className="col-span-10 flex gap-2">
-                <span>:</span>
-                <span>{data.data.updated_at}</span>
-              </div>
-            </div>
-          </div>
-        </div>
+        </form>
       </div>
     </AdminLayout >
   )
