@@ -2,7 +2,6 @@ import { BiEdit, BiTrash } from "react-icons/bi";
 import { useQuery } from "@tanstack/react-query";
 import { fetchUsers } from "../../services/usersApi";
 import { useState, useContext } from "react";
-import UpdateUser from "../fragment/UpdateUser";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { deleteUserById } from "../../services/usersApi";
 import { ThemeContext } from "../../context/ThemeContext";
@@ -70,7 +69,6 @@ const ReadUsers = () => {
                     type="button"
                     to={`/user-management/${user.id}`}
                     className="w-10 md:w-15 lg:w-20 h-5 md:h-7 flex justify-center items-center text-[8px] md:text-[12px] lg:text-sm text-amber-600 hover:bg-amber-300 hover:text-gray-700 gap-1 border rounded-sm cursor-pointer"
-                  // onClick={() => setEditUserId(user.id)}
                   >
                     <BiEdit />
                     <span>Detail</span>
