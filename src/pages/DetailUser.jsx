@@ -34,16 +34,15 @@ const DetailUser = () => {
     mutationFn: updateUser,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["users"] });
+      alert("data berhasil diedit");
       setEdit(true);
     },
     onError: (error) => {
-      console.log("ERROR:", error.response?.data);
       alert(error.response?.data?.error || error.message || "gagal update data");
     },
   });
 
   const onSubmit = (formData) => {
-    console.log(formData);
     updateMutation.mutate({
       id: id,
       data: formData,
@@ -145,7 +144,20 @@ const DetailUser = () => {
                 <div className="col-span-2">Role</div>
                 <div className="col-span-10 flex gap-2">
                   <span>:</span>
-                  <span>user</span>
+                  {edit ? (
+                    <span>{data.data.role}</span>
+                  ) : (
+                    <select
+                      {...register("role", { required: true })}
+                      className="w-full px-3 py-1 border-b border-gray-300 rounded-sm 
+             focus:outline-none focus:ring-1 focus:ring-red-400
+             bg-white"
+                    >
+                      <option value="">--Pilih role--</option>
+                      <option value="admin">admin</option>
+                      <option value="user">user</option>
+                    </select>
+                  )}
                 </div>
               </div>
               <div className="grid grid-cols-12 text-xs md:text-[14px] lg:text-[16px]">

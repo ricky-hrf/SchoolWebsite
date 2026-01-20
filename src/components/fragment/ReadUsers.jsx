@@ -56,7 +56,7 @@ const ReadUsers = () => {
           {data.data.map((user, index) => (
             <tr key={user.id} className={`${index % 2 === 0 ? `${theme === "light" ? "bg-red-50" : "bg-gray-800"}` : `${theme === "light" ? "bg-white" : "bg-gray-700"}`
               } ${theme === "light" ? "hover:bg-red-100" : "hover:bg-gray-500"} transition`}>
-              <td className="px-2 md:px-4 py-3 text-[8px] md:text-[12px] lg:text-sm text-center text-gray-700">{index + 1}</td>
+              <td className="px-2 md:px-4 py-3 text-[8px] md:text-[12px] lg:text-sm text-center text-gray-900">{index + 1}</td>
               <td className="px-2 md:px-4 text-center">
                 <img src="" alt="profile" className="border h-8 w-8 rounded-full" />
               </td>
