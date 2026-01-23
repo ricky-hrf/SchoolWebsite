@@ -5,7 +5,7 @@ export const login = async (email, password) => {
   const response = await axiosInstance.post("/login", { email, password, });
 
   // simpan token
-  localStorage.setItem("token", response.data.token);
+  localStorage.setItem("token", response.data.data.token);
 
   return response.data;
 };

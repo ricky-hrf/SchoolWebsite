@@ -1,21 +1,23 @@
-import { useContext, useState } from "react";
-import { AuthContext } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
+import { login } from "../services/authService";
+import { useForm } from "react-hook-form";
 
 const LoginPage = () => {
-  const { login } = useContext(AuthContext);
   const navigate = useNavigate();
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
 
-  const handleLogin = (e) => {
-    e.preventDefault();
-    const success = login(username, password);
-    if (success) {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm();
+
+  const onSubmit = async (data) => {
+    try {
+      await login(data.email, data.password);
       navigate("/dashboard");
-    } else {
-      setError("username / password salah!!");
+    } catch (error) {
+      console.error(error);
+      alert("email/password salah");
     }
   };
 
@@ -30,30 +32,38 @@ const LoginPage = () => {
             <div className="w-full h-10 flex justify-center items-center">
               <span className="text-xl font-bold">Welcome Back!</span>
             </div>
-            {error && <p className="text-red-600">{error}</p>}
-            <form onSubmit={handleLogin}>
+            <form onSubmit={handleSubmit(onSubmit)}>
               <div className="w-full mt-4 grid grid-cols-12 gap-5 justify-center items-center">
-                <label htmlFor="username" className="col-span-3">Username</label>
+                {errors.email && (
+                  <p className="col-span-12 text-red-600 text-sm">{errors.email.message}</p>
+                )}
+                <label htmlFor="email" className="col-span-3">Email</label>
                 <input
                   type="text"
-                  id="username"
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
-                  className="col-span-9 w-full border focus:ring-2 focus:ring-red-200 rounded focus:outline-none p-1" required />
+                  {...register("email", {
+                    required: "email wajib diisi",
+                  })}
+                  className="col-span-9 w-full border focus:ring-2 focus:ring-red-200 rounded focus:outline-none p-1" />
+
+
               </div>
               <div className="w-full mt-4 grid grid-cols-12 gap-5 justify-center items-center">
+                {errors.password && (
+                  <p className="col-span-12 text-red-600 text-sm">{errors.password.message}</p>
+                )}
                 <label htmlFor="password" className="col-span-3">Password</label>
                 <input
                   type="password"
-                  id="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  className="col-span-9 w-full border focus:ring-2 focus:ring-red-200 rounded focus:outline-none p-1" required />
+                  {...register("password", {
+                    required: "password wajib di isi",
+                  })}
+                  className="col-span-9 w-full border focus:ring-2 focus:ring-red-200 rounded focus:outline-none p-1" />
               </div>
               <button
                 type="submit"
+                disabled={isSubmitting}
                 className="w-full mt-4 border p-2 rounded-full flex justify-center items-center hover:bg-red-900 hover:text-white transition duration-300 cursor-pointer">
-                Login
+                {isSubmitting ? "Loading..." : "Login"}
               </button>
             </form>
           </div>
